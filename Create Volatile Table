@@ -1,0 +1,33 @@
+/* similar to #tmp table in SSMS as it is an in-session table, however, you can import external data to it as well. 
+Data from DPS THP High Value dataset from DPS website */
+
+create volatile table TMP as
+
+(
+SELECT	
+'White' as "Race",
+count(distinct Ticket_Number) as Total
+FROM	Violation.Violations_Update
+Where
+Driver_Race_Sex like '%white%'
+
+UNION ALL
+
+SELECT	
+'Asian',
+count(distinct Ticket_Number) as Total
+FROM	Violation.Violations_Update
+Where
+Driver_Race_Sex like '%Asian%')
+With data
+ON COMMIT PRESERVE ROWS
+
+
+SELECT * FROM TMP
+
+
+/*
+
+drop table TMP
+
+*/
