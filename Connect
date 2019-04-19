@@ -1,0 +1,17 @@
+import pyodbc
+import pandas as pd
+import os
+
+os.chdir = 'C:\\Users\\Sully\\Desktop'
+
+link = 'DRIVER={DRIVERNAME};DBCNAME={hostname};UID={uid};PWD={pwd}'.format(
+                      DRIVERNAME="Teradata Database ODBC Driver 16.20",hostname="193.168.2.222",  
+                      uid="dbc",pwd="dbc")
+with pyodbc.connect(link,autocommit=True) as connect:
+    query = "SELECT * FROM Violation.Violations_Update"
+    df = pd.read_sql(query,connect)
+    
+writer = pd.ExcelWriter('tera_data_extract.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name='Data')
+
+writer.save()
