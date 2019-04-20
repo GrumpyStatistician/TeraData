@@ -1,0 +1,18 @@
+/* this isn't complete as I keep failing to grant myself access rights */
+
+create procedure Driver_Race_Sex_tickets()(
+)
+Begin
+	DECLARE race as varchar(25);
+	SELECT	
+	'White' as "Race",
+	count(distinct Ticket_Number) as Total
+	FROM	Violation.Violations_Update
+	Where
+	Driver_Race_Sex like race;
+	END;
+	
+	
+/*	GRANT SELECT
+     ON Violation.Violations_Update
+     TO ALL DBC*/
