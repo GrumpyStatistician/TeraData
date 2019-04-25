@@ -1,18 +1,21 @@
-/* this isn't complete as I keep failing to grant myself access rights */
+/* this only inserts values into table * taken from https://forgetcode.com/Teradata/1162-Executing-STORED-PROCEDURE */
 
-create procedure Driver_Race_Sex_tickets()(
-)
-Begin
-	DECLARE race as varchar(25);
-	SELECT	
-	'White' as "Race",
-	count(distinct Ticket_Number) as Total
-	FROM	Violation.Violations_Update
-	Where
-	Driver_Race_Sex like race;
+
+CREATE PROCEDURE SP_Employee 
+(IN name CHAR(20),
+IN id INTEGER,
+IN dept_no INTEGER,
+OUT dname CHAR(10),
+INOUT errstr VARCHAR(30))
+ 
+BEGIN
+DECLARE CONTINUE HANDLER FOR SQLSTATE VALUE '23505'
+SET errstr = 'Duplicate Row.';
+ 
+INSERT INTO Employee (EmpName, EmpNo, DeptNo )
+VALUES (name, id, dept_no);
+ 
+SELECT DeptName
+INTO dname FROM Department
+WHERE DeptNo = dept;
 END;
-	
-	
-/*	GRANT SELECT
-     ON Violation.Violations_Update
-     TO ALL DBC*/
