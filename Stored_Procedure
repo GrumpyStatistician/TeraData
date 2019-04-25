@@ -26,7 +26,8 @@ WHERE DeptNo = dept;
 END;
 
 /* Example two, this is a macro, I can save queries and use the parameters to manipulate conditions in the where, 
-note: you have to put a colon infront of the variable name, so that it recognizes it */
+note: you have to put a colon infront of the variable name, so that it recognizes it 
+This data is from THP High Value Datasets on DPS website*/
 
 Create macro get_race_count(Race_Sex varchar(25)) as (
 
