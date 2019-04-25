@@ -1,6 +1,11 @@
-/* this only inserts values into table * taken from https://forgetcode.com/Teradata/1162-Executing-STORED-PROCEDURE */
+/* 
+So apparently Teradata is weirdly different than t-sql, stored procedures use in and out parameteres, commonly used for updating,
+inserting, deleting information from tables, etc.
+However...you cannot set parameters for conditions in a query. Instead, you must create a Macro
+ */
 
-
+/* example one , this is a teradata stored procedure 
+this only inserts values into table and taken from https://forgetcode.com/Teradata/1162-Executing-STORED-PROCEDURE */
 CREATE PROCEDURE SP_Employee 
 (IN name CHAR(20),
 IN id INTEGER,
@@ -19,3 +24,22 @@ SELECT DeptName
 INTO dname FROM Department
 WHERE DeptNo = dept;
 END;
+
+/* Example two, this is a macro, I can save queries and use the parameters to manipulate conditions in the where, 
+note: you have to put a colon infront of the variable name, so that it recognizes it */
+
+Create macro get_race_count(Race_Sex varchar(25)) as (
+
+SELECT
+Driver_Race_Sex,
+count(distinct Ticket_number) as Total
+FROM Violation.Violations_Update
+WHERE
+Driver_Race_Sex = :Race_Sex
+Group by
+Driver_Race_Sex;
+);
+
+
+/* Excecute Macro */
+Execute get_race_count
