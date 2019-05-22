@@ -1,0 +1,30 @@
+# Filename: teradata.kv
+<MyGrid>:
+
+    user: user
+    passw: passw
+
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+
+        GridLayout:
+            cols:2
+
+            Label:
+                text: "User: "
+
+            TextInput:
+                id: user
+                multinline:False
+
+            Label:
+                text: "Pass: "
+
+            TextInput:
+                id: passw
+                multiline:False
+
+        Button:
+            text:"Submit"
+            on_press: root.btn()
